@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>quiz</title>
+</head>
+<body>
+
+<h1>WELCOME TO QUIZ</h1>
+
+<div id="button-container">
+    <button id="btn1">1</button>
+    <button id="btn2">2</button>
+    <button id="btn3">3</button>
+    <button id="btn4">4</button>
+    <button id="btn5">5</button>
+    <button id="btn6">6</button>
+    <button id="btn7">7</button>
+    <button id="btn8">8</button>
+    <button id="btn9">9</button>
+    <button id="btn10">10</button>
+</div>
+
+
+<div id="question-display">
+    <h2>Question:</h2>
+    <p id="question-text"></p>
+    <h2>Options:</h2>
+    <ul id="options-list"></ul>
+    <button id="save-button">Save Answer</button>
+</div>
+
+<script>
+    // Questions and options
+    const questions = [
+        {
+            question: "What is the capital of France?",
+            options: ["London", "Berlin", "Madrid", "Paris"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "Who wrote 'Romeo and Juliet'?",
+            options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "George Orwell"],
+            correctAnswer: "William Shakespeare"
+        },
+        {
+            question: "What is the largest planet in our solar system?",
+            options: ["Mars", "Venus", "Earth", "Jupiter"],
+            correctAnswer: "Jupiter"
+        },
+        {
+            question: "What is the chemical symbol for gold?",
+            options: ["Go", "Gd", "Au", "Ag"],
+            correctAnswer: "Au"
+        },
+        {
+            question: "How many continents are there?",
+            options: ["5", "6", "7", "8"],
+            correctAnswer: "7"
+        },
+        {
+            question: "Who painted the Mona Lisa?",
+            options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+            correctAnswer: "Leonardo da Vinci"
+        },
+        {
+            question: "What is the boiling point of water in Celsius?",
+            options: ["50°C", "75°C", "100°C", "150°C"],
+            correctAnswer: "100°C"
+        },
+        {
+            question: "What is the largest mammal in the world?",
+            options: ["Elephant", "Blue Whale", "Giraffe", "Lion"],
+            correctAnswer: "Blue Whale"
+        },
+        {
+            question: "What is the currency of Japan?",
+            options: ["Dollar", "Euro", "Yen", "Pound"],
+            correctAnswer: "Yen"
+        },
+        {
+            question: "What is the chemical symbol for oxygen?",
+            options: ["O2", "O3", "O", "Ox"],
+            correctAnswer: "O"
+        }
+    ];
+
+ 
+    for (let i = 1; i <= 10; i++) {
+        const button = document.getElementById(btn${i});
+        button.addEventListener('click', () => showQuestion(i));
+    }
+
+    // Function to display the question and options for the selected number
+    function showQuestion(number) {
+        const questionDisplay = document.getElementById('question-display');
+        const questionText = document.getElementById('question-text');
+        const optionsList = document.getElementById('options-list');
+
+        // Check if the number is within the valid range (1 to 10)
+        if (number >= 1 && number <= 10) {
+            const selectedQuestion = questions[number - 1];
+            questionText.textContent = selectedQuestion.question;
+
+            // Clear the previous options
+            optionsList.innerHTML = '';
+
+            // Add options to the list
+            selectedQuestion.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'answer';
+                radio.value = option;
+                li.appendChild(radio);
+                li.appendChild(document.createTextNode(option));
+                optionsList.appendChild(li);
+            });
+
+            // Add a Save Answer button and save the selected answer
+            const saveButton = document.getElementById('save-button');
+            saveButton.onclick = () => {
+                const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === selectedQuestion.correctAnswer) {
+                        alert(Correct! You selected: ${selectedAnswer.value});
+                    } else {
+                        alert(Incorrect. You selected: ${selectedAnswer.value}. The correct answer is: ${selectedQuestion.correctAnswer});
+                    }
+                } else {
+                    alert('Please select an answer.');
+                }
+            };
+        } else {
+            questionText.textContent = "Invalid number.";
+        }
+    }
+</script>
+
+</body>
+</html>
